@@ -27,6 +27,7 @@
     <button id="sendOne">向pageOne发送消息</button>
     <button id="sendThird">向pageThird发送消息</button>
     <div id="pageOneText" class="text"></div>
+    <div id="pageOneCall" class="text"></div>
   </div>
   <script>
     // 向pageOne发送消息
@@ -54,6 +55,17 @@
       var pageOneText = document.getElementById("pageOneText");
       var txt =document.createTextNode(data.content);
       pageOneText.appendChild(txt);
+    })
+
+    // 接收pageOne页面的数据且返回数据
+    CD.extends('pageTwoCallBack', (data) => {
+      var pageOneCall = document.getElementById("pageOneCall");
+      var txt =document.createTextNode(data.content);
+      pageOneCall.appendChild(txt);
+      var params = {
+        content: '我是子页面pageTwo的回调数据'
+      }
+      return params
     })
   </script>
 </body>
