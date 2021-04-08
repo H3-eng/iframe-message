@@ -6,13 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pageTwo</title>
   <script src="cross-domain.js"></script>
+  <style>
+    .page-box {
+      padding: 10px;
+    }
+    .page-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .text {
+      margin: 10px 0;
+      color: crimson;
+    }
+  </style>
 </head>
 <body>
-  <span>pageTwo</span>
-  <div id="sendOne">向pageOne发送消息</div>
-  <div id="sendThird">向pageThird发送消息</div>
-  <div id="pageOneText"></div>
-  <div id="pageThirdText"></div>
+  <div class="page-box">
+    <div class="page-name">pageTwo页面</div>
+    <button id="sendOne">向pageOne发送消息</button>
+    <button id="sendThird">向pageThird发送消息</button>
+    <div id="pageOneText" class="text"></div>
+  </div>
   <script>
     // 向pageOne发送消息
     var sendOne = document.getElementById('sendOne')

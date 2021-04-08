@@ -6,13 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pageThird</title>
   <script src="cross-domain.js"></script>
+  <style>
+    .page-box {
+      padding: 10px;
+    }
+    .page-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .text {
+      margin: 10px 0;
+      color: crimson;
+    }
+  </style>
 </head>
 <body>
-  <span>pageThird</span>
-  <div id="pageOneText"></div>
-  <div id="pageTwoText"></div>
-  <div></div>
-  <iframe name="pageFour" src="http://localhost:8083/" frameborder="0"></iframe>
+  <div class="page-box">
+    <div class="page-name">pageThird</div>
+    <div id="pageOneText" class="text"></div>
+    <div id="pageTwoText" class="text"></div>
+    <div style="display:inline-block; width:300px; height: 300px; border: 1px solid #dfdfdf;">
+      <iframe name="pageFour" src="http://localhost:8083/" frameborder="0"></iframe>
+    </div>
+  </div>
   <script>
      // 接收pageOne页面的数据
      CD.extends('sendThirdMethod', (data) => {

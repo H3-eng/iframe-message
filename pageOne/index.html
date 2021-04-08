@@ -6,18 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>pageOne</title>
   <script src="cross-domain.js"></script>
+  <style>
+    .page-box {
+      padding: 10px;
+    }
+    .page-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .text {
+      margin: 10px 0;
+      color: crimson;
+    }
+  </style>
 </head>
 <body>
-  <div>pageOne</div>
-  <div id="sendTwo">向pageTwo发送消息</div>
-  <div id="sendThird">向pageThird发送消息</div>
-  <div id="sendFour">向sendPageFour发送消息</div>
-  <div id="pageTwoText"></div>
-  <div style="display:inline-block; width:500px; height: 500px; border: 1px solid #dfdfdf;">
-    <iframe name="pageTwo" src="http://localhost:8081/" frameborder="0" width="100%" height="100%"></iframe>
-  </div>
-  <div style="display:inline-block; width:500px; height: 500px; border: 1px solid #dfdfdf;">
-    <iframe name="pageThird" src="http://localhost:8082/" frameborder="0" width="100%" height="100%"></iframe>
+  <div class="page-box">
+    <div class="page-name">pageOne</div>
+    <button id="sendTwo">向pageTwo发送消息</button>
+    <button id="sendThird">向pageThird发送消息</button>
+    <button id="sendFour">向sendPageFour发送消息</button>
+    <div id="pageTwoText" class="text"></div>
+    <div style="margin-bottom: 10px;">
+      <div style="display:inline-block; width:500px; height: 500px; border: 1px solid #dfdfdf;">
+        <iframe name="pageTwo" src="http://localhost:8081/" frameborder="0" width="100%" height="100%"></iframe>
+      </div>
+      <div style="display:inline-block; width:500px; height: 500px; border: 1px solid #dfdfdf;">
+        <iframe name="pageThird" src="http://localhost:8082/" frameborder="0" width="100%" height="100%"></iframe>
+      </div>
+    </div>
   </div>
   <script>
     // 向pageTwo发送消息
