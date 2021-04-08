@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pageFour</title>
+  <script src="cross-domain.js"></script>
+</head>
+<body>
+  <div>pageFour</div>
+  <div id="pageFourText"></div>
+  <script>
+    CD.extends('sendPageFourMethod', (data) => {
+      console.log('sendPageFourMethod')
+      var pageOneText = document.getElementById("pageFourText");
+      var txt =document.createTextNode(data.content);
+      pageOneText.appendChild(txt);
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pageTwo</title>
+  <script src="cross-domain.js"></script>
+</head>
+<body>
+  <span>pageTwo</span>
+  <div id="sendOne">向pageOne发送消息</div>
+  <div id="sendThird">向pageThird发送消息</div>
+  <div id="pageOneText"></div>
+  <div id="pageThirdText"></div>
+  <script>
+    // 向pageOne发送消息
+    var sendOne = document.getElementById('sendOne')
+    sendOne.onclick = function() {
+      var params = {
+        content: '我是子页面pageTwo的数据'
+      }
+      CD.send('MASTER', 'sendOneMethod', params)
+    }
+    // 向pageThird发送消息
+    var sendThird = document.getElementById('sendThird')
+    sendThird.onclick = function() {
+      var params = {
+        componentName: 'pageThird',
+        methodName: 'sendTwoMethod',
+        message: {
+         content: '我是子页面pageTwo的数据' 
+        }
+      }
+      CD.send('MASTER', 'sendChildPage', params)
+    }
+    // 接收pageOne页面的数据
+    CD.extends('sendTwoMethod', (data) => {
+      var pageOneText = document.getElementById("pageOneText");
+      var txt =document.createTextNode(data.content);
+      pageOneText.appendChild(txt);
+    })
+  </script>
+</body>
+</html>

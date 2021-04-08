@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pageThird</title>
+  <script src="cross-domain.js"></script>
+</head>
+<body>
+  <span>pageThird</span>
+  <div id="pageOneText"></div>
+  <div id="pageTwoText"></div>
+  <div></div>
+  <iframe name="pageFour" src="http://localhost:8083/" frameborder="0"></iframe>
+  <script>
+     // 接收pageOne页面的数据
+     CD.extends('sendThirdMethod', (data) => {
+      var pageOneText = document.getElementById("pageOneText");
+      var txt =document.createTextNode(data.content);
+      pageOneText.appendChild(txt);
+    })
+    // 接收pageTwo页面的数据
+    CD.extends('sendTwoMethod', (data) => {
+      var pageTwoText = document.getElementById("pageTwoText");
+      var txt =document.createTextNode(data.content);
+      pageTwoText.appendChild(txt);
+    })
+    // 接收pageOne传pageFour页面的数据
+    CD.extends('sendFourMethod', (data) => {
+      // console.log(data, 'aa')
+      CD.send('pageFour', 'sendPageFourMethod', data)
+    })
+  </script>
+</body>
+</html>
