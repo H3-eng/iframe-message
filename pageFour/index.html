@@ -32,15 +32,11 @@
     CD.extends('getPageFourHeight', () => {
       const height = document.getElementById('pageFourBox').offsetHeight
       const width = document.getElementById('pageFourBox').offsetWidth
-      const params = JSON.stringify({
-        componentName: 'pageThird',
-        methodName: 'setPageFourHeight',
-        message: JSON.stringify({
-          width: width,
-          height: height
-        })
-      })
-      CD.send('MASTER', 'sendChildPage', params)
+      const params = {
+        width: width,
+        height: height
+      }
+      CD.send('PARENT', 'setPageFourHeight', params)
     })
     // 接收数据
     CD.extends('sendFourMethod', (data) => {

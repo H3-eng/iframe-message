@@ -30,11 +30,11 @@
     <div id="oneText" class="text"></div>
     <div id="oneTextCall" class="text"></div>
     <div style="margin-bottom: 10px;">
-      <div style="display:inline-block;border: 1px solid #dfdfdf;">
-        <iframe name="pageTwo" id="pageTwoIframe" src="http://localhost:8081/" frameborder="0"></iframe>
+      <div style="display:inline-block;width: 500px;border: 1px solid #dfdfdf;">
+        <iframe name="pageTwo" id="pageTwoIframe" src="http://localhost:8081/" frameborder="0" width="100%"></iframe>
       </div>
-      <div style="display:inline-block;border: 1px solid #dfdfdf;">
-        <iframe name="pageThird" id="pageThirdIframe" src="http://localhost:8082/" frameborder="0"></iframe>
+      <div style="display:inline-block;width: 500px;border: 1px solid #dfdfdf;">
+        <iframe name="pageThird" id="pageThirdIframe" src="http://localhost:8082/" frameborder="0" width="100%"></iframe>
       </div>
     </div>
   </div>
@@ -46,16 +46,11 @@
         clearInterval(interval)
       }
       CD.send('pageTwo', 'getPageTwoHeight', '', (data) => {
-        const params= JSON.parse(data)
-        const height = params.height + 20
-        document.getElementById('pageTwoIframe').style.width = params.width + + 'px'
+        const height = data.height + 20
         document.getElementById('pageTwoIframe').style.height = height + 'px'
       })
       CD.send('pageThird', 'getPageThirdHeight', '', (data) => {
-        console.log(data, 'data')
-        const params= JSON.parse(data)
-        const height = params.height + 20
-        document.getElementById('pageThirdIframe').style.width = params.width + 'px'
+        const height = data.height + 20
         document.getElementById('pageThirdIframe').style.height = height + 'px'
       })
     }, 500)

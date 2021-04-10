@@ -26,8 +26,8 @@
     <div class="page-name">pageThird页面</div>
     <button id="sendFour">嵌套父传子通信：向pageFour发送消息</button>
     <div id="thirdText" class="text"></div>
-    <div style="display:inline-block; border: 1px solid #dfdfdf;">
-      <iframe name="pageFour" id="pageFourIframe" src="http://localhost:8083/" frameborder="0"></iframe>
+    <div style="display:inline-block;width: 400px; border: 1px solid #dfdfdf;">
+      <iframe name="pageFour" id="pageFourIframe" src="http://localhost:8083/" frameborder="0" width="100%"></iframe>
     </div>
   </div>
   <script>
@@ -41,21 +41,17 @@
     }, 500)
     // 动态设置iframe高度
     CD.extends('setPageFourHeight', (data) => {
-      const params= JSON.parse(data)
-      const height = params.height + 20
-      console.log(data, 'data')
-      document.getElementById('pageFourIframe').style.width = params.width + 'px'
+      const height = data.height + 20
       document.getElementById('pageFourIframe').style.height = height + 'px'
     })
     // 传输页面高度
     CD.extends('getPageThirdHeight', () => {
       const height = document.getElementById('pageThirdBox').offsetHeight
       const width = document.getElementById('pageThirdBox').offsetWidth
-      const params = JSON.stringify({
+      const params = {
         width: width,
         height: height
-      })
-      console.log(params, 'params')
+      }
       return params
     })
     // 接收数据
