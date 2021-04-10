@@ -22,17 +22,41 @@
   </style>
 </head>
 <body>
-  <div class="page-box">
+  <div class="page-box" id="pageFourBox">
     <div class="page-name">pageFour</div>
-    <div id="pageFourText" class="text"></div>
+    <button id="sendThird">嵌套子传父通信：向pageThird发送消息</button>
+    <div id="fourText" class="text"></div>
   </div>
   <script>
-    CD.extends('sendPageFourMethod', (data) => {
-      console.log('sendPageFourMethod')
-      var pageOneText = document.getElementById("pageFourText");
-      var txt =document.createTextNode(data.content);
-      pageOneText.appendChild(txt);
+     // 传输页面高度
+    CD.extends('getPageFourHeight', () => {
+      const height = document.getElementById('pageFourBox').offsetHeight
+      const width = document.getElementById('pageFourBox').offsetWidth
+      const params = JSON.stringify({
+        componentName: 'pageThird',
+        methodName: 'setPageFourHeight',
+        message: JSON.stringify({
+          width: width,
+          height: height
+        })
+      })
+      CD.send('MASTER', 'sendChildPage', params)
     })
+    // 接收数据
+    CD.extends('sendFourMethod', (data) => {
+      var fourText = document.getElementById("fourText");
+      var txt =document.createTextNode(data.content);
+      fourText.appendChild(txt);
+    })
+     // 向pageThird发送消息
+    var sendThird = document.getElementById('sendThird')
+    sendThird.onclick = function() {
+      var params = {
+        content: '嵌套子传父通信：我是子页面pageFour的数据'
+      }
+      console.log(params, 'params')
+      CD.send('PARENT', 'sendThirdMethod', params)
+    }
   </script>
 </body>
 </html>

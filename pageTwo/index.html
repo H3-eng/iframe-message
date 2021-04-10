@@ -22,48 +22,57 @@
   </style>
 </head>
 <body>
-  <div class="page-box">
+  <div class="page-box" id="pageTwoBox">
     <div class="page-name">pageTwo页面</div>
     <button id="sendOne">向pageOne发送消息</button>
     <button id="sendThird">向pageThird发送消息</button>
-    <div id="pageOneText" class="text"></div>
-    <div id="pageOneCall" class="text"></div>
+    <div id="twoText" class="text"></div>
+    <div id="twoTextCall" class="text"></div>
   </div>
   <script>
+    // 传输页面高度
+    CD.extends('getPageTwoHeight', () => {
+      const height = document.getElementById('pageTwoBox').offsetHeight
+      const width = document.getElementById('pageTwoBox').offsetWidth
+      const params = {
+        width: width,
+        height: height
+      }
+      return params
+    })
     // 向pageOne发送消息
     var sendOne = document.getElementById('sendOne')
     sendOne.onclick = function() {
       var params = {
-        content: '我是子页面pageTwo的数据'
+        content: '子传父通信：我是子页面pageTwo的数据'
       }
-      CD.send('MASTER', 'sendOneMethod', params)
+      CD.send('PARENT', 'sendOneMethod', params)
     }
     // 向pageThird发送消息
     var sendThird = document.getElementById('sendThird')
     sendThird.onclick = function() {
       var params = {
         componentName: 'pageThird',
-        methodName: 'sendTwoMethod',
+        methodName: 'sendThirdMethod',
         message: {
-         content: '我是子页面pageTwo的数据' 
+         content: '兄弟页面通信：我是兄弟页面pageTwo的数据' 
         }
       }
-      CD.send('MASTER', 'sendChildPage', params)
+      CD.send('PARENT', 'sendChildPage', params)
     }
-    // 接收pageOne页面的数据
+    // 接收数据
     CD.extends('sendTwoMethod', (data) => {
-      var pageOneText = document.getElementById("pageOneText");
+      var twoText = document.getElementById("twoText");
       var txt =document.createTextNode(data.content);
-      pageOneText.appendChild(txt);
+      twoText.appendChild(txt);
     })
-
-    // 接收pageOne页面的数据且返回数据
+    // 接收数据且返回数据
     CD.extends('pageTwoCallBack', (data) => {
-      var pageOneCall = document.getElementById("pageOneCall");
+      var twoTextCall = document.getElementById("twoTextCall");
       var txt =document.createTextNode(data.content);
-      pageOneCall.appendChild(txt);
+      twoTextCall.appendChild(txt);
       var params = {
-        content: '我是子页面pageTwo的回调数据'
+        content: '回调数据，我是子页面pageTwo的回调数据'
       }
       return params
     })

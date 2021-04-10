@@ -24,27 +24,46 @@
 <body>
   <div class="page-box">
     <div class="page-name">pageOne</div>
-    <button id="sendTwo">向pageTwo发送消息</button>
-    <button id="sendTwoCallback">向pageTwo发送消息且回调处理</button>
-    <button id="sendThird">向pageThird发送消息</button>
-    <button id="sendFour">向sendPageFour发送消息</button>
-    <div id="pageTwoText" class="text"></div>
-    <div id="pageTwoCallBack" class="text"></div>
+    <button id="sendTwo">父传子通信：向pageTwo发送消息</button>
+    <button id="sendTwoCallback">父传子通信且接受回调处理：向pageTwo发送消息且回调处理</button>
+    <button id="sendFour">父传嵌套子通信：向sendPageFour发送消息</button>
+    <div id="oneText" class="text"></div>
+    <div id="oneTextCall" class="text"></div>
     <div style="margin-bottom: 10px;">
-      <div style="display:inline-block; width:500px; height: 500px; border: 1px solid #dfdfdf;">
-        <iframe name="pageTwo" src="http://localhost:8081/" frameborder="0" width="100%" height="100%"></iframe>
+      <div style="display:inline-block;border: 1px solid #dfdfdf;">
+        <iframe name="pageTwo" id="pageTwoIframe" src="http://localhost:8081/" frameborder="0"></iframe>
       </div>
-      <div style="display:inline-block; width:500px; height: 500px; border: 1px solid #dfdfdf;">
-        <iframe name="pageThird" src="http://localhost:8082/" frameborder="0" width="100%" height="100%"></iframe>
+      <div style="display:inline-block;border: 1px solid #dfdfdf;">
+        <iframe name="pageThird" id="pageThirdIframe" src="http://localhost:8082/" frameborder="0"></iframe>
       </div>
     </div>
   </div>
   <script>
+    // 动态设置iframe高度
+    const startTime = new Date().getTime();
+    const interval = setInterval(() => {
+      if(new Date().getTime() - startTime > 3000) {
+        clearInterval(interval)
+      }
+      CD.send('pageTwo', 'getPageTwoHeight', '', (data) => {
+        const params= JSON.parse(data)
+        const height = params.height + 20
+        document.getElementById('pageTwoIframe').style.width = params.width + + 'px'
+        document.getElementById('pageTwoIframe').style.height = height + 'px'
+      })
+      CD.send('pageThird', 'getPageThirdHeight', '', (data) => {
+        console.log(data, 'data')
+        const params= JSON.parse(data)
+        const height = params.height + 20
+        document.getElementById('pageThirdIframe').style.width = params.width + 'px'
+        document.getElementById('pageThirdIframe').style.height = height + 'px'
+      })
+    }, 500)
     // 向pageTwo发送消息
     var sendTwo = document.getElementById('sendTwo')
     sendTwo.onclick = function() {
       var params = {
-        content: '我是父页面pageOne的数据'
+        content: '父传子通信：我是父页面pageOne的数据'
       }
       CD.send('pageTwo', 'sendTwoMethod', params)
     }
@@ -55,33 +74,26 @@
         content: '我是父页面pageOne的数据,请返回回调函数'
       }
       CD.send('pageTwo', 'pageTwoCallBack', params, (data) => {
-        var pageTwoCallBack = document.getElementById("pageTwoCallBack");
+        var oneTextCall = document.getElementById("oneTextCall");
         var txt =document.createTextNode(data.content);
-        pageTwoCallBack.appendChild(txt);
+        oneTextCall.appendChild(txt);
       })
-    }
-    // 向pageThird发送消息
-    var sendThird = document.getElementById('sendThird')
-    sendThird.onclick = function() {
-      var params = {
-        content: '我是父页面pageOne的数据'
-      }
-      CD.send('pageThird', 'sendThirdMethod', params)
     }
     // 向pageFour发送消息
     var sendFour = document.getElementById('sendFour')
     sendFour.onclick = function() {
       var params = {
-        content: '我是父页面pageOne的数据'
+        content: '父传嵌套子通信：我是父页面pageOne的数据'
       }
       CD.send('pageThird', 'sendFourMethod', params)
     }
-    // 接收pageTwo页面的数据
+    // 接收子页面的数据
     CD.extends('sendOneMethod', (data) => {
-      var pageOneText = document.getElementById("pageTwoText");
+      var oneText = document.getElementById("oneText");
       var txt =document.createTextNode(data.content);
-      pageOneText.appendChild(txt);
+      oneText.appendChild(txt);
     })
+    // 
   </script>
 </body>
 </html>
