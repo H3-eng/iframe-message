@@ -74,7 +74,7 @@
       var params = {
         content: '回调数据，我是子页面pageTwo的回调数据'
       }
-      return params
+      CD.send('PARENT', 'callback', params)
     })
   </script>
 </body>

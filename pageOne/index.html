@@ -68,12 +68,14 @@
       var params = {
         content: '我是父页面pageOne的数据,请返回回调函数'
       }
-      CD.send('pageTwo', 'pageTwoCallBack', params, (data) => {
-        var oneTextCall = document.getElementById("oneTextCall");
+      CD.send('pageTwo', 'pageTwoCallBack', params)
+    }
+    // 回调函数
+    CD.extends('callback', (data) => {
+      var oneTextCall = document.getElementById("oneTextCall");
         var txt =document.createTextNode(data.content);
         oneTextCall.appendChild(txt);
-      })
-    }
+    })
     // 向pageFour发送消息
     var sendFour = document.getElementById('sendFour')
     sendFour.onclick = function() {
